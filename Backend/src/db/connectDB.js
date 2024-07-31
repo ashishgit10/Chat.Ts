@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
-const ConnectDB = async (): Promise<void> => {
+const ConnectDB = async ()=> {
   try {
     const connect = await mongoose
-      .connect("http://127.0.0.1:27017/Chat")
+      .connect("mongodb://127.0.0.1:27017/Chat")
       .then(() => {
         console.log("DB connected Successfully");
       });

@@ -1,16 +1,17 @@
 import express from "express";
-import ConnectDB from "./src/db/connectDB";
+import ConnectDB from "./src/db/connectDB.js";
 import cookieParser from "cookie-parser";
-/* import { register } from "./src/Routes/register"; */
+import router from "./src/Routes/registerUser.js";
 
 const app = express();
 
 const PORT = 8001;
 
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(cookieParser());
 
-const server = async (): Promise<void> => {
+const server = async () => {
   try {
     await ConnectDB();
     app.listen(PORT, () => {
@@ -23,4 +24,4 @@ const server = async (): Promise<void> => {
 };
 server();
 
-app.get('/api/v1/',register)
+app.use("/api/v1", router);

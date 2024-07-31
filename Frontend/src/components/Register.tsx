@@ -16,15 +16,7 @@ const Register: React.FC = () => {
                     </div>
                 </div>
                 <div>
-                    {
-                        login ?
-
-                            <LoginForm />
-                            :
-
-                            <SignupForm />
-
-                    }
+                    {login ? <LoginForm /> : <SignupForm />}
                 </div>
             </div>
 
