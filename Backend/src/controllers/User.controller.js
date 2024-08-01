@@ -3,8 +3,8 @@ import generateToken from "../Utils/GenerateToken.js";
 
 const Signup = async (req, res) => {
   const { name, email, password } = req.body;
-  console.log(name, email, password)
-  
+  /*   console.log(name, email, password) */
+
   if (!name || !email || !password) {
     return res.status(400).json({ message: "Name, email, and password are required" });
   }
@@ -36,4 +36,28 @@ const Signup = async (req, res) => {
   }
 };
 
-export default Signup;
+const Login = async (req, res) => {
+  const { email, password } = req.body
+  if (!email || !password) {
+    return res.status(400).json({ message: "enter name or password" })
+  }
+  try {
+    const checkuser = await User.findOne({ email });
+    if (!checkuser) {
+      return res.status(401).json({ message: "User not found" })
+    }
+    const user = await checkuser.MatchPassword(password)
+    console.log("usercontroller", user)
+
+    if (!user) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+    if (user) {
+      return res.status(200).json({ message: "Login Successful" })
+    }
+  } catch (err) {
+    return res.status(500).json({ message: "Internal Server error during login" })
+
+  }
+}
+export { Login, Signup };
