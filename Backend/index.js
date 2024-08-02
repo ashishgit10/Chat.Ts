@@ -2,7 +2,7 @@ import express from "express";
 import ConnectDB from "./src/db/connectDB.js";
 import cookieParser from "cookie-parser";
 import router from "./src/Routes/registerUser.js";
-import verifyToken from "./src/Middleware/AuthCheck.js";
+
 import cors from "cors"
 const app = express();
 
@@ -12,8 +12,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: 'http://localhost:5173', 
-  credentials: true 
+  origin: 'http://localhost:5173',
+  credentials: true
 }));
 const server = async () => {
   try {
@@ -29,3 +29,4 @@ const server = async () => {
 server();
 
 app.use("/api/v1", router);
+
