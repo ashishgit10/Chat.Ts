@@ -2,7 +2,8 @@ import express from "express";
 import ConnectDB from "./src/db/connectDB.js";
 import cookieParser from "cookie-parser";
 import router from "./src/Routes/registerUser.js";
-
+import verifyToken from "./src/Middleware/AuthCheck.js";
+import cors from "cors"
 const app = express();
 
 const PORT = 8001;
@@ -10,7 +11,10 @@ const PORT = 8001;
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
-
+app.use(cors({
+  origin: 'http://localhost:5173', 
+  credentials: true 
+}));
 const server = async () => {
   try {
     await ConnectDB();

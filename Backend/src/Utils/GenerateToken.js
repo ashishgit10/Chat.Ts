@@ -4,4 +4,5 @@ const generateToken = (id) => {
     return jwt.sign({ id }, SECRETE)
 }
 
-export default generateToken
+
+export default generateToken 

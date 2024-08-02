@@ -20,13 +20,14 @@ const Signup = async (req, res) => {
       name: name,
     });
 
+
     if (CreateUser) {
+      const token = generateToken(CreateUser._id);
+      res.cookie('token', token, {
+        httpOnly: true,
+      });
       return res.status(201).json({
         message: "User Created Successfully",
-        _id: CreateUser._id,
-        name: CreateUser.name,
-        email: CreateUser.email,
-        token: generateToken(CreateUser._id)
       });
     } else {
       return res.status(500).json({ message: "Error Creating user" });
@@ -47,14 +48,26 @@ const Login = async (req, res) => {
       return res.status(401).json({ message: "User not found" })
     }
     const user = await checkuser.MatchPassword(password)
-    console.log("usercontroller", user)
+
 
     if (!user) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
-    if (user) {
-      return res.status(200).json({ message: "Login Successful" })
-    }
+
+    const token = generateToken(checkuser._id);
+
+    res.cookie('token', token, {
+      httpOnly: true,
+      sameSite: true
+    })
+
+    return res.status(200).json({
+      message: "Login Successful",
+      id: checkuser._id,
+      name: checkuser.name,
+      email: checkuser.email
+    })
+
   } catch (err) {
     return res.status(500).json({ message: "Internal Server error during login" })
 

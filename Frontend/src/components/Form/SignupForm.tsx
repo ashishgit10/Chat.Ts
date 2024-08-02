@@ -1,4 +1,6 @@
+import axios from "axios";
 import React, { useState } from "react";
+import toast, { Toaster } from 'react-hot-toast';
 
 const SignupForm: React.FC = () => {
   const [show, setShow] = useState<boolean>(false);
@@ -14,13 +16,34 @@ const SignupForm: React.FC = () => {
     );
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(data)
-  };
+  
+    try {
+      const response = await axios.post("http://localhost:8001/api/v1/signup", data, {
+        headers: {
+          "Content-Type": "application/json"
+        }, withCredentials: true
+      })
+      if (response.status === 201) {
+        toast.success("Signup Successful");
+        console.log("Response Data:", response.data);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+
+        toast.error(error.response?.data?.message || "Signup failed");
+      } else {
+        toast.error("An unexpected error occurred");
+      }
+    }
+
+  }
+
 
   return (
     <form className="flex flex-col p-5" onSubmit={handleSubmit}>
+      <Toaster />
       <label htmlFor="name">Name</label>
       <input
         type="text"

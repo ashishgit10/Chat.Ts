@@ -1,7 +1,7 @@
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-/* import Home from './components/Home' */
 import Register from './components/Register'
+import Home from './components/Home'
 
 
 
@@ -13,7 +13,7 @@ const App: React.FC = () => {
     <>
       <BrowserRouter>
         <Routes>
-         {/*  <Route path="/" element={<Home />} /> */}
+          <Route path="/home" element={<Home />} />
           <Route path="/" element={<Register />} />
        
         </Routes>
