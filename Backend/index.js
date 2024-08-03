@@ -27,6 +27,8 @@ const server = async () => {
   }
 };
 server();
-
+app.get("/logout", (req, res) => {
+  res.clearCookie("token").redirect("/")
+})
 app.use("/api/v1", router);
 

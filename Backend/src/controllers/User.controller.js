@@ -24,7 +24,9 @@ const Signup = async (req, res) => {
     if (CreateUser) {
       const token = generateToken(CreateUser._id);
       res.cookie('token', token, {
-        httpOnly: true,
+        httpOnly: false,
+        secure: false,
+        sameSite: 'Lax'
       });
       return res.status(201).json({
         message: "User Created Successfully",
@@ -57,8 +59,9 @@ const Login = async (req, res) => {
     const token = generateToken(checkuser._id);
 
     res.cookie('token', token, {
-      httpOnly: true,
-      sameSite: true
+      httpOnly: false,
+      secure: false,
+      sameSite: 'Lax'
     })
 
     return res.status(200).json({
