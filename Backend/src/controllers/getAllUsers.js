@@ -11,9 +11,9 @@ const getAllUsers = async (req, res) => {
             { email: { $regex: req.query.search, $options: "i" } }
         ]
     } : {}
-    const users = await User.find(keyword).find({ _id: { $ne: req.user.id } })
+    const users = await User.find(keyword).select('-password').find({ _id: { $ne: req.user.id } })
 
-    res.send(users)
+    res.status(200).json({ data: users })
 }
 
 export default getAllUsers

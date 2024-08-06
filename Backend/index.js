@@ -27,8 +27,9 @@ const server = async () => {
   }
 };
 server();
-app.get("/logout", (req, res) => {
-  res.clearCookie("token").redirect("/")
-})
+app.get('/logout', (req, res) => {
+res.clearCookie('token', { path: '/', domain: 'localhost', httpOnly: true });
+  res.status(200).json({ message: 'Logged out successfully' });
+});
 app.use("/api/v1", router);
 

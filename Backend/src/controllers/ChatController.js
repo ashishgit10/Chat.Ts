@@ -25,7 +25,7 @@ const accessChat = async (req, res) => {
     });
 
     if (isChat.length > 0) {
-        res.send(isChat[0]);
+       return res.status(200).json(isChat[0]);
     } else {
         var chatData = {
             isGroupChat: false,
@@ -41,10 +41,10 @@ const accessChat = async (req, res) => {
             "users",
             "-password"
         );
-        res.status(200).send(fullChat);
+       return res.status(200).json(fullChat);
     } catch (error) {
-        res.send(400);
-        throw new Error(error.message);
+        return res.sendStatus(400);
+       
     }
 };
 const fetchChat = async (req, res) => {
